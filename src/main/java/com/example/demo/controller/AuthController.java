@@ -5,7 +5,8 @@ import com.example.demo.dto.UserResponse;
 import com.example.demo.services.UserServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.dto.LoginRequest;
+import java.util.List;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -17,7 +18,15 @@ public class AuthController {
     public UserResponse register(@RequestBody RegisterRequest request) {
         return userServices.register(request);
     }
+    @PostMapping("/login")
+    public UserResponse login(@RequestBody LoginRequest request) {
+        return userServices.login(request);
+    }
 
+    @GetMapping("/users")
+    public List<UserResponse> getAllUsers() {
+        return userServices.getAllUsers();
+    }
 
 
 }

@@ -4,11 +4,13 @@ import com.example.demo.dto.UserResponse;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.dto.LoginRequest;
+import java.util.List;
 import org.springframework.stereotype.Service;
 @Service
 public class UserServices {
 
-
+    //Register
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -33,5 +35,25 @@ public class UserServices {
         user = userRepository.save(user);
 
         return userMapper.toResponse(user);
+    }
+
+    //Login
+    public UserResponse login(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
+
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("Mật khẩu không đúng");
+        }
+
+        return userMapper.toResponse(user);
+    }
+
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toResponse)
+                .toList();
     }
 }
