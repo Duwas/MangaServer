@@ -39,4 +39,21 @@ public class CategoryServices {
                 })
                 .toList();
     }
+    public CategoryResponse createCategory(CategoryRequest request) {
+
+        if (categoryRepository.existsByName(request.getName())) {
+            throw new RuntimeException("Thể loại đã tồn tại");
+        }
+
+        Category category = new Category();
+        category.setName(request.getName());
+
+        Category saved = categoryRepository.save(category);
+
+        CategoryResponse response = new CategoryResponse();
+        response.setId(saved.getId());
+        response.setName(saved.getName());
+
+        return response;
+    }
 }
