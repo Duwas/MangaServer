@@ -1,2 +1,7 @@
-package com.example.demo.models;public class Role {
+package com.example.demo.models;
+
+public enum Role {
+    USER,
+    AUTHOR,
+    ADMIN
 }

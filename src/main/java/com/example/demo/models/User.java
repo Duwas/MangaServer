@@ -30,7 +30,9 @@ public class User {
     private String address;
 
     private String avatarUrl;
-    private String role = "USER";
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
     private Long status = 1L;
     private LocalDateTime createdAt = LocalDateTime.now();
 }
