@@ -4,6 +4,7 @@ import com.example.demo.dto.Manga.MangaRequest;
 import com.example.demo.dto.Manga.MangaResponse;
 import com.example.demo.services.MangaServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +17,33 @@ public class MangaController {
     private final MangaServices mangaServices;
 
     @PostMapping
-    public MangaResponse createManga(
-            @RequestBody MangaRequest request) {
-
+    @PreAuthorize("hasAnyRole('AUTHOR', 'ADMIN')")
+    public MangaResponse createManga(@RequestBody MangaRequest request) {
         return mangaServices.createManga(request);
     }
 
     @GetMapping("/All")
     public List<MangaResponse> getAllMangas() {
-
         return mangaServices.getAllMangas();
     }
 
     @GetMapping("/{id}")
-    public MangaResponse getMangaById(
-            @PathVariable Long id) {
-
+    public MangaResponse getMangaById(@PathVariable Long id) {
         return mangaServices.getMangaById(id);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('AUTHOR', 'ADMIN')")
+    public MangaResponse updateManga(
+            @PathVariable Long id,
+            @RequestBody MangaRequest request) {
+
+        return mangaServices.updateManga(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteManga(@PathVariable Long id) {
+        mangaServices.deleteManga(id);
     }
 }

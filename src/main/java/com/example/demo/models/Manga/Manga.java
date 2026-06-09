@@ -36,6 +36,8 @@ public class Manga {
     @Enumerated(EnumType.STRING)
     private MangaStatus status = MangaStatus.ONGOING;
 
+    private Double averageRating = 0.0;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToMany

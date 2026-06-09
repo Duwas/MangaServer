@@ -60,4 +60,33 @@ public class MangaServices {
 
         return mangaMapper.toResponse(manga);
     }
+    public MangaResponse updateManga(Long id, MangaRequest request) {
+
+        Manga manga = mangaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy truyện"));
+
+        manga.setTitle(request.getTitle());
+        manga.setDescription(request.getDescription());
+        manga.setCoverImage(request.getCoverImage());
+        manga.setStatus(request.getStatus());
+
+        Set<Category> categories = new HashSet<>(
+                categoryRepository.findAllById(request.getCategoryIds())
+        );
+
+        manga.setCategories(categories);
+
+        manga = mangaRepository.save(manga);
+
+        return mangaMapper.toResponse(manga);
+    }
+
+    public void deleteManga(Long id) {
+
+        if (!mangaRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy truyện");
+        }
+
+        mangaRepository.deleteById(id);
+    }
 }

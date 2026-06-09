@@ -16,30 +16,6 @@ public class CategoryServices {
     private final CategoryRepository categoryRepository;
 
     public CategoryResponse createCategory(CategoryRequest request) {
-        Category category = new Category();
-        category.setName(request.getName());
-
-        Category saved = categoryRepository.save(category);
-
-        CategoryResponse response = new CategoryResponse();
-        response.setId(saved.getId());
-        response.setName(saved.getName());
-
-        return response;
-    }
-
-    public List<CategoryResponse> getAllCategories() {
-        return categoryRepository.findAll()
-                .stream()
-                .map(category -> {
-                    CategoryResponse response = new CategoryResponse();
-                    response.setId(category.getId());
-                    response.setName(category.getName());
-                    return response;
-                })
-                .toList();
-    }
-    public CategoryResponse createCategory(CategoryRequest request) {
 
         if (categoryRepository.existsByName(request.getName())) {
             throw new RuntimeException("Thể loại đã tồn tại");
@@ -50,9 +26,43 @@ public class CategoryServices {
 
         Category saved = categoryRepository.save(category);
 
+        return toResponse(saved);
+    }
+
+    public List<CategoryResponse> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public CategoryResponse updateCategory(Long id, CategoryRequest request) {
+
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy thể loại"));
+
+        category.setName(request.getName());
+
+        Category saved = categoryRepository.save(category);
+
+        return toResponse(saved);
+    }
+
+    public void deleteCategory(Long id) {
+
+        if (!categoryRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy thể loại");
+        }
+
+        categoryRepository.deleteById(id);
+    }
+
+    private CategoryResponse toResponse(Category category) {
+
         CategoryResponse response = new CategoryResponse();
-        response.setId(saved.getId());
-        response.setName(saved.getName());
+
+        response.setId(category.getId());
+        response.setName(category.getName());
 
         return response;
     }
