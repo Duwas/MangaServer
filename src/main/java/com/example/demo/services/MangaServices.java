@@ -51,6 +51,13 @@ public class MangaServices {
                 .map(mangaMapper::toResponse)
                 .toList();
     }
+    public List<MangaResponse> getApprovedMangas() {
+
+        return mangaRepository.findByApprovedTrue()
+                .stream()
+                .map(mangaMapper::toResponse)
+                .toList();
+    }
 
     public MangaResponse getMangaById(Long id) {
 
@@ -88,5 +95,26 @@ public class MangaServices {
         }
 
         mangaRepository.deleteById(id);
+    }
+    public MangaResponse approveManga(Long id) {
+        Manga manga = mangaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy truyện"));
+
+        manga.setApproved(true);
+
+        manga = mangaRepository.save(manga);
+
+        return mangaMapper.toResponse(manga);
+    }
+
+    public MangaResponse rejectManga(Long id) {
+        Manga manga = mangaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy truyện"));
+
+        manga.setApproved(false);
+
+        manga = mangaRepository.save(manga);
+
+        return mangaMapper.toResponse(manga);
     }
 }

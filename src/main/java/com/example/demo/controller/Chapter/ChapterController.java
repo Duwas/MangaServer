@@ -4,6 +4,7 @@ import com.example.demo.dto.Chapter.ChapterRequest;
 import com.example.demo.dto.Chapter.ChapterResponse;
 import com.example.demo.services.ChapterServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ChapterController {
     private final ChapterServices chapterServices;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ChapterResponse createChapter(
             @RequestBody ChapterRequest request) {
 
