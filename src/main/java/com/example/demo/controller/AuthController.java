@@ -30,4 +30,8 @@ public class AuthController {
     public List<UserResponse> getAllUsers() {
         return userServices.getAllUsers();
     }
+    @DeleteMapping("/users/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        return userServices.deleteUser(id);
+    }
 }

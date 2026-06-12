@@ -58,7 +58,16 @@ public class UserServices {
 
         return userMapper.toResponse(user);
     }
+    public String deleteUser(Long id) {
 
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy user");
+        }
+
+        userRepository.deleteById(id);
+
+        return "Xoá người dùng có id"+ " " + id +" " + "thành công";
+    }
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
