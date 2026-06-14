@@ -1,11 +1,13 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.security.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,16 @@ public class UserServices {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public UserServices(UserRepository userRepository,
                         UserMapper userMapper,
-                        PasswordEncoder passwordEncoder) {
+                        PasswordEncoder passwordEncoder,
+                        JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public UserResponse register(RegisterRequest request) {
@@ -47,7 +52,7 @@ public class UserServices {
         return userMapper.toResponse(user);
     }
 
-    public UserResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
@@ -56,8 +61,16 @@ public class UserServices {
             throw new RuntimeException("Mật khẩu không đúng");
         }
 
-        return userMapper.toResponse(user);
+        String token = jwtUtil.generateToken(
+                user.getEmail(),
+                user.getRole().name()
+        );
+
+        UserResponse userResponse = userMapper.toResponse(user);
+
+        return new LoginResponse(token, userResponse);
     }
+
     public String deleteUser(Long id) {
 
         if (!userRepository.existsById(id)) {
@@ -66,8 +79,9 @@ public class UserServices {
 
         userRepository.deleteById(id);
 
-        return "Xoá người dùng có id"+ " " + id +" " + "thành công";
+        return "Xoá người dùng có id " + id + " thành công";
     }
+
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
