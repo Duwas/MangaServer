@@ -9,8 +9,26 @@ import java.util.Set;
 public class MangaRequest {
 
     private String title;
+
+    private String slug;
+
     private String description;
+
     private String coverImage;
+
+    private String bannerImage;
+
+    private String authorName;
+
+    private String artist;
+
     private MangaStatus status;
+
+    private Boolean hot;
+
+    private Boolean featured;
+
+    private Boolean newManga;
+
     private Set<Long> categoryIds;
 }

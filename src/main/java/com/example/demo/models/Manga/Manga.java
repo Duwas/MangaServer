@@ -1,11 +1,9 @@
 package com.example.demo.models.Manga;
 
-import com.example.demo.models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,25 +18,44 @@ public class Manga {
     @Column(columnDefinition = "NVARCHAR(255)")
     private String title;
 
+    @Column(unique = true)
+    private String slug;
+
     @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
-    private Boolean approved = false;
+
     private String coverImage;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
+    private String bannerImage;
+
+    @Column(columnDefinition = "NVARCHAR(100)")
+    private String authorName;
+
+    @Column(columnDefinition = "NVARCHAR(100)")
+    private String artist;
+
+    private Integer chapterCount = 0;
 
     private Long views = 0L;
 
-    private Integer chapterCount = 0;
+    private Double averageRating = 0.0;
+
+    private Integer ratingCount = 0;
 
     @Enumerated(EnumType.STRING)
     private MangaStatus status = MangaStatus.ONGOING;
 
-    private Double averageRating = 0.0;
+    private Boolean approved = false;
+
+    private Boolean hot = false;
+
+    private Boolean featured = false;
+
+    private Boolean newManga = false;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToMany
     @JoinTable(
@@ -46,5 +63,5 @@ public class Manga {
             joinColumns = @JoinColumn(name = "manga_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 }

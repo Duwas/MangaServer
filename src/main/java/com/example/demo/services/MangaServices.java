@@ -30,7 +30,18 @@ public class MangaServices {
         manga.setDescription(request.getDescription());
         manga.setCoverImage(request.getCoverImage());
         manga.setStatus(request.getStatus());
+        manga.setTitle(request.getTitle());
+        manga.setSlug(request.getSlug());
+        manga.setDescription(request.getDescription());
+        manga.setCoverImage(request.getCoverImage());
+        manga.setBannerImage(request.getBannerImage());
+        manga.setAuthorName(request.getAuthorName());
+        manga.setArtist(request.getArtist());
+        manga.setStatus(request.getStatus());
 
+        manga.setHot(Boolean.TRUE.equals(request.getHot()));
+        manga.setFeatured(Boolean.TRUE.equals(request.getFeatured()));
+        manga.setNewManga(Boolean.TRUE.equals(request.getNewManga()));
         Set<Category> categories = new HashSet<>(
                 categoryRepository.findAllById(
                         request.getCategoryIds()
@@ -76,7 +87,19 @@ public class MangaServices {
         manga.setDescription(request.getDescription());
         manga.setCoverImage(request.getCoverImage());
         manga.setStatus(request.getStatus());
+        manga.setTitle(request.getTitle());
+        manga.setSlug(request.getSlug());
+        manga.setDescription(request.getDescription());
+        manga.setCoverImage(request.getCoverImage());
+        manga.setBannerImage(request.getBannerImage());
+        manga.setAuthorName(request.getAuthorName());
+        manga.setArtist(request.getArtist());
+        manga.setStatus(request.getStatus());
 
+        manga.setHot(Boolean.TRUE.equals(request.getHot()));
+        manga.setFeatured(Boolean.TRUE.equals(request.getFeatured()));
+        manga.setNewManga(Boolean.TRUE.equals(request.getNewManga()));
+        manga.setUpdatedAt(java.time.LocalDateTime.now());
         Set<Category> categories = new HashSet<>(
                 categoryRepository.findAllById(request.getCategoryIds())
         );
