@@ -20,8 +20,7 @@ public class MangaMapper {
         response.setDescription(manga.getDescription());
         response.setCoverImage(manga.getCoverImage());
         response.setBannerImage(manga.getBannerImage());
-        response.setAuthorName(manga.getAuthorName());
-        response.setArtist(manga.getArtist());
+        response.setAuthor(manga.getAuthor());
 
         response.setChapterCount(manga.getChapterCount());
         response.setViews(manga.getViews());

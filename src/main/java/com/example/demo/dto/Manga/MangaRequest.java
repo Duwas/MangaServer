@@ -18,9 +18,7 @@ public class MangaRequest {
 
     private String bannerImage;
 
-    private String authorName;
-
-    private String artist;
+    private String author;
 
     private MangaStatus status;
 

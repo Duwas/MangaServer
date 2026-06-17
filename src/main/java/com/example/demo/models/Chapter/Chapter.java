@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,9 +19,17 @@ public class Chapter {
     @Column(columnDefinition = "NVARCHAR(255)")
     private String title;
 
-    private String contentImage;
-
     private Integer chapterNumber;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "chapter_images",
+            joinColumns = @JoinColumn(name = "chapter_id")
+    )
+    @Column(name = "image_url")
+    private List<String> contentImages;
+
+    private Long views = 0L;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

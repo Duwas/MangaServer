@@ -15,20 +15,22 @@ public class ChapterMapper {
         response.setTitle(chapter.getTitle());
         response.setChapterNumber(chapter.getChapterNumber());
 
-        response.setMangaId(
-                chapter.getManga().getId()
-        );
-        response.setContentImage(
-                chapter.getContentImage()
-        );
-        response.setMangaTitle(
-                chapter.getManga().getTitle()
-        );
+        response.setContentImages(chapter.getContentImages());
 
-        response.setCreatedAt(
-                chapter.getCreatedAt()
-        );
+        response.setViews(chapter.getViews());
 
+        response.setCreatedAt(chapter.getCreatedAt());
+
+        if (chapter.getManga() != null) {
+
+            response.setMangaId(
+                    chapter.getManga().getId()
+            );
+
+            response.setMangaTitle(
+                    chapter.getManga().getTitle()
+            );
+        }
 
         return response;
     }

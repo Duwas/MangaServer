@@ -35,8 +35,7 @@ public class MangaServices {
         manga.setDescription(request.getDescription());
         manga.setCoverImage(request.getCoverImage());
         manga.setBannerImage(request.getBannerImage());
-        manga.setAuthorName(request.getAuthorName());
-        manga.setArtist(request.getArtist());
+        manga.setAuthor(request.getAuthor());
         manga.setStatus(request.getStatus());
 
         manga.setHot(Boolean.TRUE.equals(request.getHot()));
@@ -92,8 +91,7 @@ public class MangaServices {
         manga.setDescription(request.getDescription());
         manga.setCoverImage(request.getCoverImage());
         manga.setBannerImage(request.getBannerImage());
-        manga.setAuthorName(request.getAuthorName());
-        manga.setArtist(request.getArtist());
+        manga.setAuthor(request.getAuthor());
         manga.setStatus(request.getStatus());
 
         manga.setHot(Boolean.TRUE.equals(request.getHot()));

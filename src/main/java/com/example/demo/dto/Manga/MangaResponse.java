@@ -21,9 +21,8 @@ public class MangaResponse {
 
     private String bannerImage;
 
-    private String authorName;
+    private String author;
 
-    private String artist;
 
     private Integer chapterCount;
 

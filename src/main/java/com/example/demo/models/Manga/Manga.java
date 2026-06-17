@@ -21,6 +21,9 @@ public class Manga {
     @Column(unique = true)
     private String slug;
 
+    @Column(columnDefinition = "NVARCHAR(255)")
+    private String alternativeTitle;
+
     @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
@@ -29,10 +32,10 @@ public class Manga {
     private String bannerImage;
 
     @Column(columnDefinition = "NVARCHAR(100)")
-    private String authorName;
+    private String author;
 
-    @Column(columnDefinition = "NVARCHAR(100)")
-    private String artist;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String country;
 
     private Integer chapterCount = 0;
 
