@@ -20,6 +20,8 @@ public class MangaRequest {
 
     private String author;
 
+    private String country;
+
     private MangaStatus status;
 
     private Boolean hot;

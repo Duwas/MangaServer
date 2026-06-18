@@ -22,43 +22,44 @@ public class MangaController {
         return mangaServices.createManga(request);
     }
 
-    @GetMapping("/All")
+    @GetMapping("/all")
     public List<MangaResponse> getAllMangas() {
         return mangaServices.getAllMangas();
+    }
+
+    @GetMapping("/approved")
+    public List<MangaResponse> getApprovedMangas() {
+        return mangaServices.getApprovedMangas();
     }
 
     @GetMapping("/{id}")
     public MangaResponse getMangaById(@PathVariable Long id) {
         return mangaServices.getMangaById(id);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('AUTHOR', 'ADMIN')")
+    public MangaResponse updateManga(
+            @PathVariable Long id,
+            @RequestBody MangaRequest request) {
+        return mangaServices.updateManga(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteManga(@PathVariable Long id) {
+        return mangaServices.deleteManga(id);
+    }
+
     @PutMapping("/{id}/approve")
     @PreAuthorize("hasRole('ADMIN')")
     public MangaResponse approveManga(@PathVariable Long id) {
         return mangaServices.approveManga(id);
-    }
-    @GetMapping("/approved")
-    public List<MangaResponse> getApprovedMangas() {
-
-        return mangaServices.getApprovedMangas();
     }
 
     @PutMapping("/{id}/reject")
     @PreAuthorize("hasRole('ADMIN')")
     public MangaResponse rejectManga(@PathVariable Long id) {
         return mangaServices.rejectManga(id);
-    }
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('AUTHOR', 'ADMIN')")
-    public MangaResponse updateManga(
-            @PathVariable Long id,
-            @RequestBody MangaRequest request) {
-
-        return mangaServices.updateManga(id, request);
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deleteManga(@PathVariable Long id) {
-        mangaServices.deleteManga(id);
     }
 }

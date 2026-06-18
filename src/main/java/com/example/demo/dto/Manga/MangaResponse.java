@@ -23,6 +23,7 @@ public class MangaResponse {
 
     private String author;
 
+    private String country;
 
     private Integer chapterCount;
 
