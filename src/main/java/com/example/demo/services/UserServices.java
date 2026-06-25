@@ -5,6 +5,7 @@ import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
@@ -81,7 +82,17 @@ public class UserServices {
 
         return "Xoá người dùng có id " + id + " thành công";
     }
+    public UserResponse changeRole(Long id, String role) {
 
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+
+        user.setRole(Role.valueOf(role));
+
+        user = userRepository.save(user);
+
+        return userMapper.toResponse(user);
+    }
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()

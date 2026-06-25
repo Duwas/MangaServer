@@ -6,7 +6,9 @@ import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.services.UserServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.dto.ChangeRoleRequest;
 
 import java.util.List;
 
@@ -34,5 +36,13 @@ public class AuthController {
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {
         return userServices.deleteUser(id);
+    }
+    @PutMapping("/users/{id}/role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse changeRole(
+            @PathVariable Long id,
+            @RequestBody ChangeRoleRequest request) {
+
+        return userServices.changeRole(id, request.getRole());
     }
 }
